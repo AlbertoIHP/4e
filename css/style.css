@@ -1,0 +1,41 @@
+.cajaInicioSesion{
+	margin-top: 0%;
+
+
+}
+
+.tituloInicioSesion{
+	text-align: center;
+	margin-top: 11%;
+
+}
+
+body {
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
+    background-size: 100%;
+    background-image:url('../img/background.png');
+   	width: 100%;
+   	height: 100%;
+}
+
+.miImagen{
+  min-height: 30px;
+  min-width: 30px;
+  max-height: 30px;
+  max-width: 30px;
+}
+
+.btnInicioSesion{
+  margin-right: 0;
+
+}
+
+.imagenAviso{
+  text-align: right;
+}
+
+.btnRegistro{
+  padding-left: 0%;
+}
