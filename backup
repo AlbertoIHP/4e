@@ -1,0 +1,2 @@
+
+  <option value="<?=$_SESSION['arregloProyectos'][$i]['idProyecto']?>" data-tokens="<?=$_SESSION['arregloProyectos'][$i]['nombreProyecto']?>"> <?=$_SESSION["arregloProyectos"][$i]["nombreProyecto"]?> </option>

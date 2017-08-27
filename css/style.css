@@ -6,7 +6,7 @@
 
 .tituloInicioSesion{
 	text-align: center;
-	margin-top: 11%;
+	margin-top: 3%;
 
 }
 
@@ -39,3 +39,27 @@ body {
 .btnRegistro{
   padding-left: 0%;
 }
+
+
+/* CLASES DE ALONSO*/
+.btnAgregarStakeholder{
+text-align: left;
+margin-left: 2%;
+
+
+}
+
+/* REEMPLAZADOS POR BOOSTRAP-SELECTOR LIBRERIA
+.dropdownCentrado{
+
+  text-align: center; 
+  left: 50% !important;
+  margin-left: -84px;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+
+.btnOpcion{
+  width: 100%;
+
+}*/

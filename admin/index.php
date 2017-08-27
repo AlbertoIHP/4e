@@ -8,6 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Cuatro enfoques System - Inicio</title>
 	<link rel="stylesheet" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="../css/bootstrap-select.css">
 	<link rel="stylesheet" href="../css/prototipo.css">
 	<link rel="stylesheet" href="../css/style.css">
 </head>
@@ -22,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">4Enfoques</a>
+      <a class="navbar-brand" href="index.php">4Enfoques</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -31,7 +32,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["correoUsuario"]; ?> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Cerrar Sesión</a></li>
+            <li><a href="cerrarSesion.php">Cerrar Sesión</a></li>
           </ul>
         </li>
       </ul>
@@ -53,6 +54,50 @@
 
 
 	<div class="container cajaInicioSesion tituloInicioSesion">
+<div class="row">
+	
+<div class="panel panel-default">
+  <div class="panel-body">
+   	Mis Proyectos
+  </div>
+
+
+  <div class="panel-footer">
+	
+				<!-- ESTE SELECTOR PERMITE LA BUSQUEDA EN VIVO
+				CON DATA-TOKEN  PODEMOS AGREGAR TAG PARA LA BUSQUEDA
+				
+				-->
+				<form  id="cargarProyecto" >
+				<div class="form-group">
+
+										<!--  SE INCORPORA UN PARAMERO NUEVO MEDIANTE UN INPUT asi el controlador sabra qu siempre este formulario es para registrar usuarios -->
+					<input type="hidden" name="tipoOperacion" value="cargarProyecto">
+					<div class="input-group" style="padding-right: 28%;">
+						<div class="input-group-btn" style="text-align: right; ">
+							<button class="btn btn-default" type="submit">Go!</button>
+						</div>
+
+
+						<select  name="idProyecto" class="selectpicker" data-live-search="true">
+							<?php /* obtener el array de objetos */
+							foreach($_SESSION["arregloProyectos"] as $row){?>
+							<option value="<?=$row["idproyecto"]?>" data-tokens=" <?=$row['nombre']?>"> <?=$row['nombre']?></option>
+							<?php } ?>
+						</select>
+					
+					</div><!-- /input-group -->
+				</div>
+				</form>
+
+
+
+  </div>
+</div>
+
+</div>
+
+<div class="row">
 		<form id="crearProyecto" class="well form-horizontal">
 			<fieldset>
 
@@ -78,7 +123,9 @@
 				  	<div class="col-md-4 inputGroupContainer">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-					  		<input id="descripcionProyecto"  name="descripcionProyecto" placeholder="Ingrese una descripción" class="form-control" type="text" required>
+
+
+					  		<textarea id="descripcionProyecto"  name="descripcionProyecto" placeholder="Ingrese una descripción" class="form-control" required></textarea>
 
 
 					<!--  SE INCORPORA UN PARAMERO NUEVO MEDIANTE UN INPUT asi el controlador sabra qu siempre este formulario es para registrar usuarios -->
@@ -111,11 +158,17 @@
 
 			</fieldset>
 		</form>
+
+</div>
+
+
+
 	</div>
 
 
 	<script src="../js/jquery-3.2.1.min.js"></script>
 	<script src="../js/bootstrap.js"></script>
+	<script src="../js/bootstrap-select.js"></script>
 	<script src="../js/action.js"></script>
 </body>
 </html>

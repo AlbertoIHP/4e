@@ -16,6 +16,68 @@ $("#btnRegistrarse").click(limpiarLogo);
 
 $("#crearProyecto").submit(crearProyecto);
 
+$("#agregarStakeholder").submit(agregarStakeholder);
+
+$("#cargarProyecto").submit(cargarProyecto);
+
+}
+
+function cargarProyecto(eventoSubmit){
+	//Con prevent default se desactiva la accion por defecto en este caso refrescar la pagina 
+	eventoSubmit.preventDefault();
+
+	//Se crea una tabla hash con los nombres asignados en los input del html
+	var tablaHashDatos = $("#cargarProyecto").serialize();
+
+	$.ajax({
+		url : "controlador.php",
+		type : "POST",
+		data : tablaHashDatos,
+		beforeSend : function(){
+			$("#creandoProyecto").html("<img class='miImagen' src='../img/load.gif'>");
+		},
+		success : function (res){
+			if(res == 1){
+				$("#creandoProyecto").html("<img class='miImagen' src='../img/done.png'>");
+				window.location = "miProyecto.php";
+			}else{
+				$("#creandoProyecto").html("<img class='miImagen' src='../img/error.png'>");;
+				//$("#creandoProyecto").html(res);
+			}
+		}
+
+	});
+}
+
+
+function agregarStakeholder(eventoSubmit){
+	//Con prevent default se desactiva la accion por defecto en este caso refrescar la pagina 
+	eventoSubmit.preventDefault();
+
+	//Se crea una tabla hash con los nombres asignados en los input del html
+	var tablaHashDatos = $("#agregarStakeholder").serialize();
+
+
+	//AJAX, la idea es que los datos viajen hasta el controlador
+
+	$.ajax({
+		url : "controlador.php",
+		type : "POST",
+		data : tablaHashDatos,
+		beforeSend : function(){
+			$("#agregandoStake").html("<img class='miImagen' src='../img/load.gif'>");
+		},
+		success : function (res){
+			if(res == 1){
+				$("#agregandoStake").html("<img class='miImagen' src='../img/done.png'>");
+				//window.location = "miProyecto.php";
+			}else{
+				$("#agregandoStake").html("<img class='miImagen' src='../img/error.png'>");
+			}
+		}
+
+	});
+
 }
 
 
@@ -38,6 +100,7 @@ function crearProyecto(eventoSubmit){
 		success : function (res){
 			if(res == 1){
 				$("#creandoProyecto").html("<img class='miImagen' src='../img/done.png'>");
+				window.location = "miProyecto.php";
 			}else{
 				$("#creandoProyecto").html("<img class='miImagen' src='../img/error.png'>");;
 				//$("#creandoProyecto").html(res);;

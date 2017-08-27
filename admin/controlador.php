@@ -21,8 +21,18 @@ function ejecutarOperacion($tipoOp){
 
 
 	}elseif ($tipoOp == "crearProyecto"){
+
 		//Vamos al modelo por que hay que guardar
 		crearProyecto($_POST["nombreProyecto"],$_POST["descripcionProyecto"],$_POST["correoUsuario"]);
+
+	}elseif ($tipoOp == "agregarStakeholder"){
+
+		//Vamos al modelo por que hay que guardar
+		agregarStakeholder($_POST["nombreStakeholder"],$_POST["descripcionStakeholder"],$_POST["nombreProyecto"]);
+
+	}elseif ($tipoOp == "cargarProyecto"){
+		//Debe ir a la vista por que es un select
+		cargarProyecto($_POST["idProyecto"]);
 	}
 
 
