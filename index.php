@@ -20,10 +20,10 @@
 <body>
 
 <div class="container tituloInicioSesion">
-	<div class="row ">
+	<div class="row " style="height: 130px;">
 		<div class="col-12">
 			
-			<h1>Modelo 4 Enfoques</h4>
+			<img style="width: 40%; max-width: 40%; height: 10%; max-height: 10%; " src="img/logo.png">
 		</div>
 	</div>
 </div>

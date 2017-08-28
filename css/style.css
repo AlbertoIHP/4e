@@ -76,3 +76,15 @@ margin-left: 2%;
 .selectorNFR{
   width: 100%;
 }
+
+.well, .panel, .panel-default, .panel-footer{
+      background-color: rgba(242, 242, 242, 0.42);
+    border: 1px solid rgba(255, 244, 244, 0);
+}
+
+hr{
+    margin-top: 13px;
+    margin-bottom: 14px;
+    border: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.21);
+}

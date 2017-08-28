@@ -22,15 +22,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.php">4Enfoques</a>
+      <a title="Volver a la pantalla principal"class="navbar-brand" style="padding-top: 0%;" href="index.php"><img style="width: 139px; max-width: 139px; height: 60px; max-height: 60px; " src="../img/logo.png"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
+        <li class="dropdown" style="text-align: center">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["correoUsuario"]; ?> <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" style="text-align: center">
             <li><a href="cerrarSesion.php">Cerrar Sesión</a></li>
           </ul>
         </li>

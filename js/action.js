@@ -40,7 +40,6 @@ $(document).ready(documentoCargado);
 
 		$(".jerarquizar").click(abrirVentanaJerarquizar);
 
-
 		$("#jerarquizar").submit(jerarquizarProyecto);
 	}
 
