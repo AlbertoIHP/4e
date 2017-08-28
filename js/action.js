@@ -38,18 +38,33 @@ $(document).ready(documentoCargado);
 
 		$("#agregarNfr").submit(agregarNfr);
 
-		$(".jerarquizar").click(jerarquizarTabla);
+		$(".jerarquizar").click(abrirVentanaJerarquizar);
+
+
+		$("#jerarquizar").submit(jerarquizarProyecto);
 	}
 
 
-
-		function jerarquizarTabla(eventoSubmit){
+		function jerarquizarProyecto(eventoSubmit){
 			eventoSubmit.preventDefault();
+			$("#jerarquizando").html("<img class='miImagen' src='../img/load.gif'>");
+		}
 
+
+
+		function abrirVentanaJerarquizar(eventoSubmit){
+			//Con prevent default se desactiva la accion por defecto en este caso refrescar la pagina 
+			eventoSubmit.preventDefault();
+			//Se crea una tabla hash con los nombres asignados en los input del html
+			var id = $(this).val();
+			//alert(id+" "+nombre);
 			$('#modalJerarquizar').modal('show');
 
+			$(".valorNombreJerarquizar").html("<input type='hidden' id='nombreJerarquizar' name='nombreJerarquizar' value='"+id+"'>");
 
-			$("#jerarquizando").html("<img class='miImagen' src='../img/load.gif'>");
+			$(".nombreJerarquizar").html("<label>Jerarquizando proyecto "+id+" </label>");
+
+
 
 		}
 

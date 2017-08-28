@@ -168,7 +168,7 @@
 							<div class="row">
 									<div class="col-sm-12" style="text-align: center; width: 100%">
 
-									<button style="text-align: center; width: 100%" title="Obtener tabla de prioridad" type="button"  class=" ocupartodoespacio btn btn-warning jerarquizar">Jerarquizar</button>
+									<button <?php if(!$_SESSION["isNfr"]){?> disabled <?php } ?>style="text-align: center; width: 100%" title="Obtener tabla de prioridad" type="button"  class=" ocupartodoespacio btn btn-warning jerarquizar" value="<?=$_SESSION["nombreProyecto"] ?>">Jerarquizar</button>
 
 									</div>
 							</div>
@@ -488,11 +488,61 @@
   	<!-- CONTENIDO COMO EN CUALQUIER PAGINA -->
     <div class="modal-content">
 
+
     <!-- HEADER -->
-		<div class="modal-header" style="text-align: center;"">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <p><span class="label label-default">Jerarquizando</span></p>
+        <p class="nombreJerarquizar"></p>
        
+      </div>
+
+
+      <!-- BODY -->
+      <div class="modal-body">
+		        
+		        
+					<form class="form-horizontal" id="jerarquizar">
+
+					<div class="row">
+						<div class="col-sm-12" style="text-align: right; ">
+							<button style="width: 100%;" class="btn btn-default" type="submit">Consultar</button>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+					<!--  SE INCORPORA UN PARAMERO NUEVO MEDIANTE UN INPUT asi el controlador sabra qu siempre este formulario es para registrar usuarios -->
+					<input type="hidden" name="tipoOperacion" value="jerarquizar">					
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+					<p type="hidden" class="valorNombreJerarquizar"></p>	
+
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-sm-12" style="text-align: center;">
+					<p type="hidden" class="valorNombreJerarquizar"></p>	
+						<div id="jerarquizando"></div>
+						</div>
+					</div>
+
+
+
+
+					</div>
+
+
+
+
+
+					</form>
+
+
       </div>
 
 

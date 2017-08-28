@@ -104,6 +104,7 @@ function cargarProyecto($idProyecto){
 			$_SESSION["isSoftgoal"] = false;
 			$_SESSION["isNfr"] = false;
 			$respuesta = 0;
+			$arregloStakeholders = array();
 			$arregloNfr = array();
 			$arregloSoftgoals = array();
 			$arregloGoals = array();
@@ -118,51 +119,60 @@ function cargarProyecto($idProyecto){
 			//guardamos el nombre del proyecto
 			$_SESSION["nombreProyecto"] = $nombreProyecto;
 
-			if(cargarStakeholders($idProyecto)){
+			$arregloStakeholders = cargarStakeholders($idProyecto);
+
+			if($arregloStakeholders){
 
 				//ESTE ARREGLO CONTIENE EL ID Y NOMBRE DE TODOS LOS STAKEHOLDERS
-				$arregloStakeholders = cargarStakeholders($idProyecto);
 				$_SESSION["stakeholderProyecto"] = $arregloStakeholders;
 				$_SESSION["isStakeholder"] = true;
 
 				//REVISAR ESTE METODO POR QUE REEMPLAZARIA LOS VALORES CON EL ULTIMO STAKEHOLDER Y BORRARIA TODOS LOS OTROS GOALS ASOCIADOS A EL
+				$aux = array();
 				foreach($arregloStakeholders as $stakeholders)
 					{
+						$arregloGoals = cargarGoals($stakeholders['idstakeholder']);
 
 						//PARA CADA STAKEHOLDER SE CARGAN SUS GOALS
 
-						if(cargarGoals($stakeholders['idstakeholder'])){
+						if($arregloGoals){
 
 							//ESTE ARREGLO CONTIENE LAS ID Y EL NOMBRE DE TODOS LOS GOALS
-							$arregloGoals = array_merge($arregloGoals, cargarGoals($stakeholders['idstakeholder']));
+							$aux = array_merge($aux, $arregloGoals);
 							$_SESSION["isGoal"] = true;
 
 											//REVISAR ESTE METODO POR QUE REEMPLAZARIA LOS VALORES CON EL ULTIMO STAKEHOLDER Y BORRARIA TODOS LOS OTROS GOALS ASOCIADOS A EL
-											foreach($arregloGoals as $goals)
+											$aux2 = array();
+											foreach($aux as $goals)
 											{
+												$arregloSoftgoals = cargarSoftgoals($goals['idgoal']);
 												//Para cada GOAL se revisan los SoftGoal
-												if(cargarSoftgoals($goals['idgoal'])){
+												if($arregloSoftgoals){
 
 													//ESTE ARREGLO CONTIENE LAS ID Y EL NOMBRE DE TODOS LOS Softgoal
-													$arregloSoftgoals = array_merge($arregloSoftgoals, cargarSoftgoals($goals['idgoal']));
+													$aux2 = array_merge($aux2, $arregloSoftgoals);
 													$_SESSION["isSoftgoal"] = true;
 
-														foreach ($arregloSoftgoals as $soft) {
-														if(cargarNfr($soft['idsubgoal'])){
-															$arregloNfr = array_merge($arregloNfr,cargarNfr($soft['idsubgoal']));
+
+														$aux3 = array();
+														foreach ($aux2 as $soft) {
+
+															$arregloNfr = cargarNfr($soft['idsubgoal']);
+														if($arregloNfr){
+															$aux3 = array_merge($aux3,$arregloNfr);
 															$_SESSION["isNfr"] = true;
 														}
 													}
-													$_SESSION["nfrSubgoal"] = $arregloNfr;
+													$_SESSION["nfrSubgoal"] = $aux3;
 
 												}
 											}
-											$_SESSION["softgoalsGoal"] = $arregloSoftgoals;
+											$_SESSION["softgoalsGoal"] = $aux2;
 
 						}
 					}
 
-							$_SESSION["goalsProyecto"] = $arregloGoals;
+							$_SESSION["goalsProyecto"] = $aux;
 			}
 
 				$respuesta = 1;

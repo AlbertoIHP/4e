@@ -63,6 +63,8 @@ PUT, DELETE, SET
 			$_SESSION["isGoal"] = false;
 			$_SESSION["isSoftgoal"] = false;
 
+			$_SESSION["isNfr"] = false;
+
 
 
 			$respuesta = 1;
