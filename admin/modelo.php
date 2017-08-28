@@ -59,6 +59,10 @@ PUT, DELETE, SET
 			//guardamos el nombre del proyecto
 			$_SESSION["nombreProyecto"] = $nombreProyecto;
 
+			$_SESSION["isStakeholder"] = false;
+			$_SESSION["isGoal"] = false;
+			$_SESSION["isSoftgoal"] = false;
+
 
 
 			$respuesta = 1;
@@ -112,6 +116,46 @@ PUT, DELETE, SET
 
 
 	}
+
+	function agregarGoal($nombre, $descripcion, $idStakeholder){
+
+		$mysql = conexionMySql();
+
+		$sqlAgregarGoal = "INSERT INTO goal() VALUES('$nombre', '$descripcion',$idStakeholder, null)";
+
+
+		$ejecucionConsulta = mysqli_query($mysql, $sqlAgregarGoal);
+
+		if($ejecucionConsulta){
+			$respuesta = 1;
+		}else{
+			$respuesta = 0;
+		}
+
+		return printf($respuesta);
+
+	}
+
+
+	function agregarSoftgoal($nombre, $descripcion, $idGoal){
+		$mysql = conexionMySql();
+
+		$sqlAgregarGoal = "INSERT INTO subgoal() VALUES('$nombre', '$descripcion',null,$idGoal )";
+
+
+		$ejecucionConsulta = mysqli_query($mysql, $sqlAgregarGoal);
+
+		if($ejecucionConsulta){
+			$respuesta = 1;
+		}else{
+			$respuesta = 0;
+		}
+
+		return printf($respuesta);
+
+
+	}
+
 
  ?>
 

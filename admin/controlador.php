@@ -33,6 +33,12 @@ function ejecutarOperacion($tipoOp){
 	}elseif ($tipoOp == "cargarProyecto"){
 		//Debe ir a la vista por que es un select
 		cargarProyecto($_POST["idProyecto"]);
+	}elseif($tipoOp == "agregarGoal"){
+		//Como es agregar, tenemos que ir al modelo
+		agregarGoal($_POST["nombreGoal"],$_POST["descripcionGoal"],$_POST["idStakeholder"]);
+	}elseif($tipoOp == "agregarSoftgoal"){
+		//es agregar, entonces al modelo
+		agregarSoftgoal($_POST["nombreSoftgoal"],$_POST["descripcionSoftgoal"],$_POST["idGoal"]);
 	}
 
 

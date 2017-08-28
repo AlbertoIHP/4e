@@ -75,15 +75,21 @@
 					<input type="hidden" name="tipoOperacion" value="cargarProyecto">
 					<div class="input-group" style="padding-right: 28%;">
 						<div class="input-group-btn" style="text-align: right; ">
-							<button class="btn btn-default" type="submit">Go!</button>
+							<button class="btn btn-default" type="submit">Abrir</button>
 						</div>
 
 
 						<select  name="idProyecto" class="selectpicker" data-live-search="true">
+
+
+
 							<?php /* obtener el array de objetos */
 							foreach($_SESSION["arregloProyectos"] as $row){?>
 							<option value="<?=$row["idproyecto"]?>" data-tokens=" <?=$row['nombre']?>"> <?=$row['nombre']?></option>
 							<?php } ?>
+
+
+							
 						</select>
 					
 					</div><!-- /input-group -->

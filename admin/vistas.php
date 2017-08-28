@@ -67,6 +67,7 @@ function obtenerProyectos($correo){
 	//Realizamos la consulta 
 	$proyectosUsuario = mysqli_query($mysql,$recoleccionProyectos);
 
+	$_SESSION["allNfr"] = obtenerTodosLosNfr();
 
 
 
@@ -86,6 +87,7 @@ function obtenerProyectos($correo){
 
 function cargarProyecto($idProyecto){
 
+
 	$mysql = conexionMySql();
 
 	$sql = "SELECT * FROM proyecto WHERE idproyecto=$idProyecto";
@@ -93,8 +95,14 @@ function cargarProyecto($idProyecto){
 	$proyecto = mysqli_query($mysql,$sql);
 
 	if($proyecto){
+
+
 			//Inicializamos la session para la comunicacion con el front-end
 			session_start();  
+			$_SESSION["isStakeholder"] = false;
+			$_SESSION["isGoal"] = false;
+			$_SESSION["isSoftgoal"] = false;
+
 
 			//Construimos una tabla Hash mediante fetch array y el resultado del objeto entregado por la ejecucioon de la consulta
 			$arreglo = mysqli_fetch_array($proyecto);
@@ -106,7 +114,69 @@ function cargarProyecto($idProyecto){
 			//guardamos el nombre del proyecto
 			$_SESSION["nombreProyecto"] = $nombreProyecto;
 
-			$respuesta = 1;
+			if(!cargarStakeholders($idProyecto)){
+
+				$_SESSION["isStakeholder"] = false;
+			}else{
+
+				//ESTE ARREGLO CONTIENE EL ID Y NOMBRE DE TODOS LOS STAKEHOLDERS
+				$arregloStakeholders = cargarStakeholders($idProyecto);
+				$_SESSION["stakeholderProyecto"] = $arregloStakeholders;
+				$_SESSION["isStakeholder"] = true;
+
+
+
+				//REVISAR ESTE METODO POR QUE REEMPLAZARIA LOS VALORES CON EL ULTIMO STAKEHOLDER Y BORRARIA TODOS LOS OTROS GOALS ASOCIADOS A EL
+				foreach($arregloStakeholders as $stakeholders)
+					{
+
+						//PARA CADA STAKEHOLDER SE CARGAN SUS GOALS
+
+						if(!cargarGoals($stakeholders['idstakeholder'])){
+
+							$_SESSION["isGoal"] = false;
+
+						}else{
+
+							//ESTE ARREGLO CONTIENE LAS ID Y EL NOMBRE DE TODOS LOS GOALS
+							$arregloGoals = cargarGoals($stakeholders['idstakeholder']);
+							$_SESSION["goalsProyecto"] = $arregloGoals;
+							$_SESSION["isGoal"] = true;
+
+											//REVISAR ESTE METODO POR QUE REEMPLAZARIA LOS VALORES CON EL ULTIMO STAKEHOLDER Y BORRARIA TODOS LOS OTROS GOALS ASOCIADOS A EL
+											foreach($arregloGoals as $goals)
+											{
+												//Para cada GOAL se revisan los SoftGoal
+												if(!cargarSoftgoals($goals['idgoal'])){
+													$_SESSION["isSoftgoal"] = false;
+												}else{
+
+													//ESTE ARREGLO CONTIENE LAS ID Y EL NOMBRE DE TODOS LOS Softgoal
+													$arregloSoftgoals = cargarSoftgoals($goals['idgoal']);
+													$_SESSION["softgoalsGoal"] = $arregloSoftgoals;
+													$_SESSION["isSoftgoal"] = true;
+												}
+
+
+
+											}
+						
+
+
+						}
+					
+
+				
+					}
+
+
+
+
+			}
+
+
+
+				$respuesta = 1;
 	}else{
 		$respuesta = 0;
 	}
@@ -114,7 +184,120 @@ function cargarProyecto($idProyecto){
 	return printf($respuesta);
 }
 
+function cargarStakeholders($idProyecto){
+			$mysql = conexionMySql();
+			//UNA VEZ QUE CARGAMOS TODO DEL PROYECTO, VEREMOS QUE STAKEHOLDER TIENE ASOCIADOS
+			$consultaStakeholderProyecto = "SELECT idstakeholder,nombre FROM stakeholder WHERE proyecto_idproyecto=$idProyecto";
+
+			$stakeholdersProyecto = mysqli_query($mysql,$consultaStakeholderProyecto);
+
+			if(mysqli_num_rows($stakeholdersProyecto) > 0){
+					while($row = $stakeholdersProyecto->fetch_array())
+					{
+						$rows[] = $row;
+					}	
+							
+					$respuesta =  $rows;
 
 
+
+
+			}else{
+
+				$respuesta = false;
+			}
+
+
+
+			return $respuesta;
+}
+
+
+function cargarGoals($idStakeholder){
+			$mysql = conexionMySql();
+			//UNA VEZ QUE CARGAMOS TODO DEL PROYECTO, VEREMOS QUE STAKEHOLDER TIENE ASOCIADOS
+			$consultaGoalsStake = "SELECT idgoal,nombre FROM goal WHERE stakeholder_idStakeholder=$idStakeholder";
+
+			$goalStake = mysqli_query($mysql,$consultaGoalsStake);
+
+			if(mysqli_num_rows($goalStake) > 0){
+					while($row = $goalStake->fetch_array())
+					{
+						$rows[] = $row;
+					}	
+							
+					$respuesta =  $rows;
+
+
+
+
+			}else{
+
+				$respuesta = false;
+			}
+
+
+
+			return $respuesta;
+
+}
+
+
+function obtenerTodosLosNfr(){
+			$mysql = conexionMySql();
+			//UNA VEZ QUE CARGAMOS TODO DEL PROYECTO, VEREMOS QUE STAKEHOLDER TIENE ASOCIADOS
+			$consultaNfr = "SELECT id,nombre FROM nfr";
+
+			$nfr = mysqli_query($mysql,$consultaNfr);
+
+			if(mysqli_num_rows($nfr) > 0){
+					while($row = $nfr->fetch_array())
+					{
+						$rows[] = $row;
+					}	
+							
+					$respuesta =  $rows;
+
+
+
+
+			}else{
+
+				$respuesta = false;
+			}
+
+
+
+			return $respuesta;
+}
+
+
+function cargarSoftgoals($idGoal){
+			$mysql = conexionMySql();
+			//UNA VEZ QUE CARGAMOS TODO DEL PROYECTO, VEREMOS QUE STAKEHOLDER TIENE ASOCIADOS
+			$consultaSoftgoal = "SELECT idsubgoal,nombre FROM subgoal WHERE goal_idGoal=$idGoal";
+
+			$softgoalsGoal = mysqli_query($mysql,$consultaSoftgoal);
+
+			if(mysqli_num_rows($softgoalsGoal) > 0){
+					while($row = $softgoalsGoal->fetch_array())
+					{
+						$rows[] = $row;
+					}	
+							
+					$respuesta =  $rows;
+
+
+
+
+			}else{
+
+				$respuesta = false;
+			}
+
+
+
+			return $respuesta;	
+}
 
  ?>
