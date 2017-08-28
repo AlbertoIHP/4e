@@ -37,13 +37,49 @@ $(document).ready(documentoCargado);
 		$("#agregarSoftgoal").submit(agregarSoftgoal);
 
 		$("#agregarNfr").submit(agregarNfr);
+
+		$(".jerarquizar").click(jerarquizarTabla);
 	}
+
+
+
+		function jerarquizarTabla(eventoSubmit){
+			eventoSubmit.preventDefault();
+
+			$('#modalJerarquizar').modal('show');
+
+
+			$("#jerarquizando").html("<img class='miImagen' src='../img/load.gif'>");
+
+		}
 
 		function agregarNfr(eventoSubmit){
 			//Con prevent default se desactiva la accion por defecto en este caso refrescar la pagina 
 			eventoSubmit.preventDefault();
 
-			alert("Esta funcionalidad aun no esta disponible ");
+			//Se crea una tabla hash con los nombres asignados en los input del html
+			var tablaHashDatos = $("#agregarNfr").serialize();
+
+			//alert(tablaHashDatos);
+
+			$.ajax({
+				url : "controlador.php",
+				type : "POST",
+				data : tablaHashDatos,
+				beforeSend : function(){
+					$("#agregandoNfr").html("<img class='miImagen' src='../img/load.gif'>");
+				},
+				success : function (res){
+					if(res == 1){
+						$("#agregandoNfr").html("<img class='miImagen' src='../img/done.png'>");
+						window.location = "index.php";
+					}else{
+						$("#agregandoNfr").html("<img class='miImagen' src='../img/error.png'>");;
+						//$("#agregandoGoal").html(res);
+					}
+				}
+
+			});
 		}
 
 		function abrirVentanaAgregarNfr(eventoSubmit){
@@ -80,7 +116,7 @@ $(document).ready(documentoCargado);
 				success : function (res){
 					if(res == 1){
 						$("#agregandoSoftgoal").html("<img class='miImagen' src='../img/done.png'>");
-						window.location = "miProyecto.php";
+						window.location = "index.php";
 					}else{
 						$("#agregandoSoftgoal").html("<img class='miImagen' src='../img/error.png'>");;
 						//$("#agregandoGoal").html(res);
@@ -141,7 +177,7 @@ $(document).ready(documentoCargado);
 				success : function (res){
 					if(res == 1){
 						$("#agregandoGoal").html("<img class='miImagen' src='../img/done.png'>");
-						window.location = "miProyecto.php";
+						window.location = "index.php";
 					}else{
 						$("#agregandoGoal").html("<img class='miImagen' src='../img/error.png'>");;
 						//$("#agregandoGoal").html(res);

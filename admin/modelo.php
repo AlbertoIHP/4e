@@ -157,6 +157,26 @@ PUT, DELETE, SET
 	}
 
 
+	function agregarNfr($idSubgoal, $idNfr){
+		$mysql = conexionMySql();
+
+		$sqlAgregarNfr = "INSERT INTO listadonfr() VALUES($idNfr,$idSubgoal)";
+
+
+		$ejecucionConsulta = mysqli_query($mysql, $sqlAgregarNfr);
+
+		if($ejecucionConsulta){
+			$respuesta = 1;
+		}else{
+			$respuesta = 0;
+		}
+
+		return printf($respuesta);
+
+
+	}
+
+
  ?>
 
 

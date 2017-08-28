@@ -102,7 +102,11 @@ function cargarProyecto($idProyecto){
 			$_SESSION["isStakeholder"] = false;
 			$_SESSION["isGoal"] = false;
 			$_SESSION["isSoftgoal"] = false;
-
+			$_SESSION["isNfr"] = false;
+			$respuesta = 0;
+			$arregloNfr = array();
+			$arregloSoftgoals = array();
+			$arregloGoals = array();
 
 			//Construimos una tabla Hash mediante fetch array y el resultado del objeto entregado por la ejecucioon de la consulta
 			$arreglo = mysqli_fetch_array($proyecto);
@@ -114,17 +118,12 @@ function cargarProyecto($idProyecto){
 			//guardamos el nombre del proyecto
 			$_SESSION["nombreProyecto"] = $nombreProyecto;
 
-			if(!cargarStakeholders($idProyecto)){
-
-				$_SESSION["isStakeholder"] = false;
-			}else{
+			if(cargarStakeholders($idProyecto)){
 
 				//ESTE ARREGLO CONTIENE EL ID Y NOMBRE DE TODOS LOS STAKEHOLDERS
 				$arregloStakeholders = cargarStakeholders($idProyecto);
 				$_SESSION["stakeholderProyecto"] = $arregloStakeholders;
 				$_SESSION["isStakeholder"] = true;
-
-
 
 				//REVISAR ESTE METODO POR QUE REEMPLAZARIA LOS VALORES CON EL ULTIMO STAKEHOLDER Y BORRARIA TODOS LOS OTROS GOALS ASOCIADOS A EL
 				foreach($arregloStakeholders as $stakeholders)
@@ -132,53 +131,41 @@ function cargarProyecto($idProyecto){
 
 						//PARA CADA STAKEHOLDER SE CARGAN SUS GOALS
 
-						if(!cargarGoals($stakeholders['idstakeholder'])){
-
-							$_SESSION["isGoal"] = false;
-
-						}else{
+						if(cargarGoals($stakeholders['idstakeholder'])){
 
 							//ESTE ARREGLO CONTIENE LAS ID Y EL NOMBRE DE TODOS LOS GOALS
-							$arregloGoals = cargarGoals($stakeholders['idstakeholder']);
-							$_SESSION["goalsProyecto"] = $arregloGoals;
+							$arregloGoals = array_merge($arregloGoals, cargarGoals($stakeholders['idstakeholder']));
 							$_SESSION["isGoal"] = true;
 
 											//REVISAR ESTE METODO POR QUE REEMPLAZARIA LOS VALORES CON EL ULTIMO STAKEHOLDER Y BORRARIA TODOS LOS OTROS GOALS ASOCIADOS A EL
 											foreach($arregloGoals as $goals)
 											{
 												//Para cada GOAL se revisan los SoftGoal
-												if(!cargarSoftgoals($goals['idgoal'])){
-													$_SESSION["isSoftgoal"] = false;
-												}else{
+												if(cargarSoftgoals($goals['idgoal'])){
 
 													//ESTE ARREGLO CONTIENE LAS ID Y EL NOMBRE DE TODOS LOS Softgoal
-													$arregloSoftgoals = cargarSoftgoals($goals['idgoal']);
-													$_SESSION["softgoalsGoal"] = $arregloSoftgoals;
+													$arregloSoftgoals = array_merge($arregloSoftgoals, cargarSoftgoals($goals['idgoal']));
 													$_SESSION["isSoftgoal"] = true;
+
+														foreach ($arregloSoftgoals as $soft) {
+														if(cargarNfr($soft['idsubgoal'])){
+															$arregloNfr = array_merge($arregloNfr,cargarNfr($soft['idsubgoal']));
+															$_SESSION["isNfr"] = true;
+														}
+													}
+													$_SESSION["nfrSubgoal"] = $arregloNfr;
+
 												}
-
-
-
 											}
-						
-
+											$_SESSION["softgoalsGoal"] = $arregloSoftgoals;
 
 						}
-					
-
-				
 					}
 
-
-
-
+							$_SESSION["goalsProyecto"] = $arregloGoals;
 			}
 
-
-
 				$respuesta = 1;
-	}else{
-		$respuesta = 0;
 	}
 
 	return printf($respuesta);
@@ -299,5 +286,35 @@ function cargarSoftgoals($idGoal){
 
 			return $respuesta;	
 }
+
+function cargarNfr($idSubgoal){
+
+	$consultaNfr = "select id,nombre from nfr where id in(select nfr_id from listadonfr where subgoal_idsubgoal in(select idsubgoal from subgoal where idsubgoal=$idSubgoal))";
+	$mysql = conexionMySql();
+
+	$nfrSubgoal = mysqli_query($mysql,$consultaNfr);
+
+			if(mysqli_num_rows($nfrSubgoal) > 0){
+					while($row = $nfrSubgoal->fetch_array())
+					{
+						$rows[] = $row;
+					}	
+							
+					$respuesta =  $rows;
+
+
+
+
+			}else{
+
+				$respuesta = false;
+			}
+
+
+
+			return $respuesta;	
+
+}
+
 
  ?>

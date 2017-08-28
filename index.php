@@ -41,7 +41,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Correo</label>
 		<div class="col-sm-10">	
-			<input type="email" class="form-control" id="usuario" placeholder="Ingrese su correo electronico porfavor..." required="true" name="usuario">
+			<input type="email" class="form-control" id="usuario" placeholder="Ingrese su correo electronico" required="true" name="usuario">
 		</div>
 	</div>
 
@@ -49,7 +49,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Contraseña</label>
 		<div class="col-sm-10">
-			<input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña porfavor..." required="true" name="password">
+			<input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña " required="true" name="password">
 		</div>
 	</div>
 

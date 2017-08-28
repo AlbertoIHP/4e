@@ -39,6 +39,9 @@ function ejecutarOperacion($tipoOp){
 	}elseif($tipoOp == "agregarSoftgoal"){
 		//es agregar, entonces al modelo
 		agregarSoftgoal($_POST["nombreSoftgoal"],$_POST["descripcionSoftgoal"],$_POST["idGoal"]);
+	}elseif ($tipoOp == "agregarNfr"){
+		//Modelo por que es agregar
+		agregarNfr($_POST["idSubgoal"],$_POST["idNfr"]);
 	}
 
 

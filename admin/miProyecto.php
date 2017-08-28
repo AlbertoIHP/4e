@@ -146,7 +146,31 @@
 							<hr style="color: #0056b2;" />
 
 							<div class="row filaNfr">
+							<?php 
 
+							if($_SESSION["isNfr"])
+							{ 
+
+
+								foreach($_SESSION["nfrSubgoal"] as $row){	?>
+									<div class="col-sm-2" style="text-align: center;">
+
+									<button disabled title="Agregar NFR" value="<?=$row['id']?>" type="button"  class=" ocupartodoespacio btn btn-default softgoals"><?=$row['nombre']?></button>
+
+									</div>
+										
+
+									<?php }}?> 
+							</div>
+
+							<hr style="color: #0056b2;" />
+
+							<div class="row">
+									<div class="col-sm-12" style="text-align: center; width: 100%">
+
+									<button style="text-align: center; width: 100%" title="Obtener tabla de prioridad" type="button"  class=" ocupartodoespacio btn btn-warning jerarquizar">Jerarquizar</button>
+
+									</div>
 							</div>
 
 					</div>
@@ -437,7 +461,7 @@
 					
 					
 					<div class="col-sm-8 imagenAviso">
-							<div id="agregandoSoftgoal"></div>
+							<div id="agregandoNfr"></div>
 					</div>
 
 
@@ -448,6 +472,37 @@
 
 
 					</form>
+
+
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- VENTANA JERARQUIZAR -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalJerarquizar" >
+  <div class="modal-dialog" role="document">
+
+
+  	<!-- CONTENIDO COMO EN CUALQUIER PAGINA -->
+    <div class="modal-content">
+
+    <!-- HEADER -->
+		<div class="modal-header" style="text-align: center;"">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p><span class="label label-default">Jerarquizando</span></p>
+       
+      </div>
+
+
+      <!-- BODY -->
+      <div class="modal-body">
+		        
+		       <div class="row"><div class="col-sm-12" style="text-align: center;">
+							<div id="jerarquizando"></div>
+					</div></div>
+					
 
 
       </div>
